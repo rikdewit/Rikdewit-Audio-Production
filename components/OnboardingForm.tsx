@@ -786,8 +786,10 @@ const OnboardingForm: React.FC = () => {
   return (
     <section id="diensten" className="min-h-screen flex items-center py-12 sm:py-20 md:py-24 px-4 sm:px-6 bg-white overflow-hidden border-y border-gray-50">
       <div className="max-w-7xl mx-auto w-full">
-        <div className="grid lg:grid-cols-5 gap-10 lg:gap-20 items-center">
-          <div className="lg:col-span-2 flex flex-col justify-center">
+        {/* Veranderd van items-center naar items-start om verticaal 'springen' te voorkomen */}
+        <div className="grid lg:grid-cols-5 gap-10 lg:gap-20 items-start">
+          {/* Kolom met tekst heeft nu een vaste top padding om uitlijning met de card te behouden zonder justify-center */}
+          <div className="lg:col-span-2 flex flex-col pt-0 lg:pt-16">
             <h2 className="text-xs uppercase tracking-[0.5em] font-bold text-gray-500 mb-6 sm:mb-8">Diensten</h2>
             <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tighter leading-[1.1] sm:leading-[0.95] mb-6 sm:mb-8 text-black">Klaar om je geluid naar een <br className="hidden sm:block" /><span className="italic">hoger niveau</span> te tillen?</h3>
             <p className="text-gray-500 font-light text-base sm:text-lg leading-relaxed max-w-md">Vul dit formulier in voor een vliegende start. Dit helpt mij om direct inzicht te krijgen in de technische eisen van jouw project.</p>
