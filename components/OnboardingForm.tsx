@@ -141,7 +141,7 @@ const OnboardingForm: React.FC = () => {
       if (who === 'Muzikant / Band') return "Naam van de band of act";
       if (who === 'Particulier') return "Naam van het project";
     }
-    return "Naam van je bedrijf of organisatie";
+    return "Naam van je bedrijf or organisatie";
   }, [formData]);
 
   const formatProjectSummary = (data: FormData): string => {
@@ -238,7 +238,6 @@ const OnboardingForm: React.FC = () => {
       if (t === 'Podcast opname' || t === 'Voice-over') return 'studio-locatie-keuze';
       return 'studio-details';
     }
-    if (step === 'studio-recording-method') return 'studio-recording-method'; // Typo fix? Should likely lead to next studio step.
     if (step === 'studio-recording-method') return 'studio-locatie-keuze';
     if (step === 'studio-locatie-keuze') return 'studio-details';
     if (step === 'studio-details') return 'contact';
@@ -342,7 +341,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black leading-tight">Wat kan ik voor je <span className="italic">betekenen</span>?</h2>
-            <div className="grid gap-2">
+            <div className="grid gap-2 mb-4 sm:mb-6">
               {[{ id: 'live', label: 'Live geluid voor een evenement' }, { id: 'studio', label: 'Studio opname' }, { id: 'nabewerking', label: 'Audio Nabewerking' }, { id: 'advies', label: 'Audio Advies' }, { id: 'anders', label: 'Anders' }].map(opt => (
                 <OptionCard key={opt.id} label={opt.label} isSelected={formData['main-service'] === opt.id} onClick={() => updateFormData('main-service', opt.id)} />
               ))}
@@ -353,7 +352,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Hoe kan ik helpen?</h2>
-            <div className="grid gap-2">
+            <div className="grid gap-2 mb-2 sm:mb-4">
               <OptionCard label="Ik organiseer een evenement - Help mij de juiste keuzes maken" isSelected={formData['live-type'] === 'organize'} onClick={() => updateFormData('live-type', 'organize')} />
               <OptionCard label="Huur mij direct in als technicus" isSelected={formData['live-type'] === 'hire'} onClick={() => updateFormData('live-type', 'hire')} />
             </div>
@@ -363,7 +362,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">In welke rol?</h2>
-            <div className="grid gap-2">
+            <div className="grid gap-2 mb-2 sm:mb-4">
               {['Audio Technicus', 'Monitor Technicus', 'Stagehand / Crew', 'Systeemontwerper', 'Anders'].map(role => (
                 <OptionCard key={role} label={role} isSelected={formData['hire-role'] === role} onClick={() => updateFormData('hire-role', role)} />
               ))}
@@ -374,7 +373,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Wat voor soort locatie?</h2>
-            <div className="grid gap-2">
+            <div className="grid gap-2 mb-2 sm:mb-4">
               {['Bar / café', 'Festival', 'Muziekpodium', 'Anders'].map(cat => (
                 <OptionCard key={cat} label={cat} isSelected={formData['hire-location-category'] === cat} onClick={() => updateFormData('hire-location-category', cat)} />
               ))}
@@ -402,7 +401,7 @@ const OnboardingForm: React.FC = () => {
                </div>
                <div className="flex flex-col gap-0.5 pt-2">
                  <label className="mono text-[10px] uppercase text-gray-400 font-bold tracking-widest">Toelichting</label>
-                 <textarea className="border-b border-gray-300 py-1.5 text-base sm:text-lg focus:border-black outline-none font-light min-h-[100px] resize-none bg-transparent text-black" placeholder="Bijv. specifieke tijden of andere bijzonderheden." value={formData['hire-details'] || ''} onChange={e => updateFormData('hire-details', e.target.value)} />
+                 <textarea className="border-b border-gray-300 py-1.5 text-base sm:text-lg focus:border-black outline-none font-light min-h-[80px] sm:min-h-[100px] resize-none bg-transparent text-black" placeholder="Bijv. specifieke tijden of andere bijzonderheden." value={formData['hire-details'] || ''} onChange={e => updateFormData('hire-details', e.target.value)} />
                </div>
             </div>
           </div>
@@ -411,7 +410,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Type studio sessie?</h2>
-            <div className="grid gap-2">
+            <div className="grid gap-2 mb-2 sm:mb-4">
               {['Band / Instrumenten', 'Podcast opname', 'Mixage / Mastering', 'Voice-over', 'Anders'].map(t => (
                 <OptionCard key={t} label={t} isSelected={formData['studio-type'] === t} onClick={() => updateFormData('studio-type', t)} />
               ))}
@@ -422,7 +421,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Hoe wil je opnemen?</h2>
-            <div className="grid gap-2">
+            <div className="grid gap-2 mb-2 sm:mb-4">
               {['Live opname', 'Multitrack / Overdubs'].map(m => (
                 <OptionCard key={m} label={m} isSelected={formData['studio-recording-method'] === m} onClick={() => updateFormData('studio-recording-method', m)} />
               ))}
@@ -433,7 +432,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Waar vindt de opname plaats?</h2>
-            <div className="grid gap-2">
+            <div className="grid gap-2 mb-2 sm:mb-4">
               {['Op locatie', 'Bij jou in de studio', 'Nee, help mij een geschikte plek zoeken'].map(l => (
                 <OptionCard key={l} label={l} isSelected={formData['studio-locatie-keuze'] === l} onClick={() => updateFormData('studio-locatie-keuze', l)} />
               ))}
@@ -461,7 +460,7 @@ const OnboardingForm: React.FC = () => {
                <div className="flex flex-col gap-0.5">
                  <label className="mono text-[10px] uppercase text-gray-400 font-bold tracking-widest">Toelichting</label>
                  <textarea 
-                   className="w-full border-b border-gray-300 py-1.5 text-base sm:text-lg focus:border-black outline-none font-light min-h-[140px] resize-none bg-transparent text-black" 
+                   className="w-full border-b border-gray-300 py-1.5 text-base sm:text-lg focus:border-black outline-none font-light min-h-[120px] sm:min-h-[140px] resize-none bg-transparent text-black" 
                    placeholder="Wat is belangrijk om te weten over je project?" 
                    value={formData['studio-details'] || ''} 
                    onChange={e => updateFormData('studio-details', e.target.value)} 
@@ -474,7 +473,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Wat moet er bewerkt worden?</h2>
-            <div className="grid gap-2">{['Podcast-montage & editing', 'Mixen van een muziekopname', 'Geluid onder video editen / mixen', 'Anders'].map(t => (
+            <div className="grid gap-2 mb-2 sm:mb-4">{['Podcast-montage & editing', 'Mixen van een muziekopname', 'Geluid onder video editen / mixen', 'Anders'].map(t => (
                 <OptionCard key={t} label={t} isSelected={formData['nabewerking-type'] === t} onClick={() => updateFormData('nabewerking-type', t)} />
             ))}</div>
           </div>
@@ -483,7 +482,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Voor wie is het advies?</h2>
-            <div className="grid gap-2">{['Horeca / Retail', 'Evenementen organisator', 'Particulier', 'Muzikant / Band', 'Anders'].map(t => (
+            <div className="grid gap-2 mb-2 sm:mb-4">{['Horeca / Retail', 'Evenementen organisator', 'Particulier', 'Muzikant / Band', 'Anders'].map(t => (
                 <OptionCard key={t} label={t} isSelected={formData['advies-who'] === t} onClick={() => updateFormData('advies-who', t)} />
             ))}</div>
           </div>
@@ -496,7 +495,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Wat is het doel?</h2>
-            <div className="grid gap-2">{goalOptions.map(t => (
+            <div className="grid gap-2 mb-2 sm:mb-4">{goalOptions.map(t => (
                 <OptionCard key={t} label={t} isSelected={formData['advies-goal'] === t} onClick={() => updateFormData('advies-goal', t)} />
             ))}</div>
           </div>
@@ -505,16 +504,16 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Type ruimte?</h2>
-            <div className="grid gap-2">{['Woonkamer', 'Project studio', 'Kantoor / Vergaderruimte', 'Horeca / Zaal'].map(t => (
+            <div className="grid gap-2 mb-2 sm:mb-4">{['Woonkamer', 'Project studio', 'Kantoor / Vergaderruimte', 'Horeca / Zaal'].map(t => (
                 <OptionCard key={t} label={t} isSelected={formData['advies-ruimte'] === t} onClick={() => updateFormData('advies-ruimte', t)} />
             ))}</div>
           </div>
         );
       case 'advies-doel':
         return (
-          <div className="space-y-3 sm:space-y-4">
+          <div className="space-y-3 sm:text-3xl font-light tracking-tight text-black">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Wat wil je bereiken?</h2>
-            <div className="grid gap-2">{['Minder galm', 'Betere isolatie naar buren', 'Eerlijkere luisterervaring', 'Anders'].map(t => (
+            <div className="grid gap-2 mb-2 sm:mb-4">{['Minder galm', 'Betere isolatie naar buren', 'Eerlijkere luisterervaring', 'Anders'].map(t => (
                 <OptionCard key={t} label={t} isSelected={formData['advies-doel'] === t} onClick={() => updateFormData('advies-doel', t)} />
             ))}</div>
           </div>
@@ -523,7 +522,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Voorkeur voor advies?</h2>
-            <div className="grid gap-2">{['Online (Video call)', 'Bezoek op location', 'Weet ik nog niet'].map(t => (
+            <div className="grid gap-2 mb-2 sm:mb-4">{['Online (Video call)', 'Bezoek op location', 'Weet ik nog niet'].map(t => (
                 <OptionCard key={t} label={t} isSelected={formData['advies-methode'] === t} onClick={() => updateFormData('advies-methode', t)} />
             ))}</div>
           </div>
@@ -532,7 +531,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Voor welk gebruik?</h2>
-            <div className="grid gap-2">{['Opname / Studio setup', 'Live geluid / Band setup', 'Hi-Fi / Thuisgebruik'].map(t => (
+            <div className="grid gap-2 mb-2 sm:mb-4">{['Opname / Studio setup', 'Live geluid / Band setup', 'Hi-Fi / Thuisgebruik'].map(t => (
                 <OptionCard key={t} label={t} isSelected={formData['advies-gebruik'] === t} onClick={() => updateFormData('advies-gebruik', t)} />
             ))}</div>
           </div>
@@ -541,7 +540,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Kwaliteitsniveau?</h2>
-            <div className="grid gap-2">{['Budget / Beginner', 'Semi-pro', 'High-end / Pro'].map(t => (
+            <div className="grid gap-2 mb-2 sm:mb-4">{['Budget / Beginner', 'Semi-pro', 'High-end / Pro'].map(t => (
                 <OptionCard key={t} label={t} isSelected={formData['advies-kopen-type'] === t} onClick={() => updateFormData('advies-kopen-type', t)} />
             ))}</div>
           </div>
@@ -566,14 +565,14 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">{adviceHeading}</h2>
-            <textarea className="w-full border-b border-gray-300 py-3 sm:py-4 text-base sm:text-lg focus:border-black outline-none font-light min-h-[160px] sm:min-h-[180px] resize-none bg-transparent text-black" placeholder={placeholder} value={formData[fieldName] || ''} onChange={e => updateFormData(fieldName, e.target.value)} />
+            <textarea className="w-full border-b border-gray-300 py-3 sm:py-4 text-base sm:text-lg focus:border-black outline-none font-light min-h-[140px] sm:min-h-[160px] resize-none bg-transparent text-black" placeholder={placeholder} value={formData[fieldName] || ''} onChange={e => updateFormData(fieldName, e.target.value)} />
           </div>
         );
       case 'live-event-type':
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Type event?</h2>
-            <div className="grid gap-2">
+            <div className="grid gap-2 mb-2 sm:mb-4">
               {['Concert / Festival', 'Bedrijfsevent', 'Presentatie / Congres', 'Privéfeest / Bruiloft', 'Anders'].map(t => (
                 <OptionCard key={t} label={t} isSelected={formData['event-type'] === t} onClick={() => updateFormData('event-type', t)} />
               ))}
@@ -584,7 +583,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Is er live muziek?</h2>
-            <div className="grid gap-2">
+            <div className="grid gap-2 mb-2 sm:mb-4">
               <OptionCard label="Ja, live muziek" isSelected={formData['has-live-music'] === 'ja'} onClick={() => updateFormData('has-live-music', 'ja')} />
               <OptionCard label="Nee, alleen sprekers of audio playback" isSelected={formData['has-live-music'] === 'nee'} onClick={() => updateFormData('has-live-music', 'nee')} />
             </div>
@@ -594,7 +593,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Wie treedt er op?</h2>
-            <div className="grid gap-2">{['Solo artiest / DJ', 'Duo / Trio', 'Band (2-5 personen)', 'Grote Band / Ensemble (6+ personen)', 'Meerdere acts'].map(p => (
+            <div className="grid gap-2 mb-2 sm:mb-4">{['Solo artiest / DJ', 'Duo / Trio', 'Band (2-5 personen)', 'Grote Band / Ensemble (6+ personen)', 'Meerdere acts'].map(p => (
                 <OptionCard key={p} label={p} isSelected={formData['performers'] === p} onClick={() => updateFormData('performers', p)} />
             ))}</div>
           </div>
@@ -603,7 +602,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Welke instrumenten?</h2>
-            <div className="grid grid-cols-2 gap-2">{['Drums', 'Basgitaar', 'Gitaar', 'Keys / Piano', 'Zang', 'Blazers', 'Percussie', 'Elektronisch'].map(i => (
+            <div className="grid grid-cols-2 gap-2 mb-2 sm:mb-4">{['Drums', 'Basgitaar', 'Gitaar', 'Keys / Piano', 'Zang', 'Blazers', 'Percussie', 'Elektronisch'].map(i => (
                 <CheckboxCard key={i} label={i} isSelected={formData[`instrument-${i}`]} onToggle={() => updateFormData(`instrument-${i}`, !formData[`instrument-${i}`])} />
             ))}</div>
           </div>
@@ -619,7 +618,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Aanwezig op locatie?</h2>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2 mb-2 sm:mb-4">
               {equipOptions.map(e => {
                 const isBlockingOption = e === 'Weet ik (nog) niet';
                 const isDisabled = !isBlockingOption && isEquipmentBlocked;
@@ -662,7 +661,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Info over je event</h2>
-            <div className="grid gap-3 sm:gap-4">
+            <div className="grid gap-3 sm:gap-4 mb-2 sm:mb-4">
                <div className="flex flex-col gap-0.5">
                  <label className="mono text-[10px] uppercase text-gray-400 font-bold tracking-widest">Datum</label>
                  <input type="date" className="border-b border-gray-300 py-1.5 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" value={formData['event-date'] || ''} onChange={e => updateFormData('event-date', e.target.value)} />
@@ -677,7 +676,7 @@ const OnboardingForm: React.FC = () => {
                </div>
                <div className="flex flex-col gap-0.5">
                  <label className="mono text-[10px] uppercase text-gray-400 font-bold tracking-widest">Toelichting</label>
-                 <textarea className="border-b border-gray-300 py-1.5 text-base sm:text-lg focus:border-black outline-none font-light min-h-[80px] resize-none bg-transparent text-black" placeholder="Aanvullende wensen of bijzonderheden?" value={formData['event-details'] || ''} onChange={e => updateFormData('event-details', e.target.value)} />
+                 <textarea className="border-b border-gray-300 py-1.5 text-base sm:text-lg focus:border-black outline-none font-light min-h-[60px] sm:min-h-[80px] resize-none bg-transparent text-black" placeholder="Aanvullende wensen of bijzonderheden?" value={formData['event-details'] || ''} onChange={e => updateFormData('event-details', e.target.value)} />
                </div>
             </div>
           </div>
@@ -686,7 +685,7 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Contactgegevens</h2>
-            <div className="grid gap-4 sm:gap-5">
+            <div className="grid gap-4 sm:gap-5 mb-2 sm:mb-4">
               <div className="grid grid-cols-2 gap-3 sm:gap-5">
                 <div className="flex flex-col gap-1">
                   <label className="mono text-[10px] uppercase text-gray-500 font-bold tracking-widest">Naam *</label>
@@ -761,10 +760,10 @@ const OnboardingForm: React.FC = () => {
             <p className="text-gray-500 font-light text-base sm:text-lg leading-relaxed max-w-md">Vul dit formulier in voor een vliegende start. Dit helpt mij om direct inzicht te krijgen in de technische eisen van jouw project.</p>
           </div>
           <div className="lg:col-span-3 w-full max-w-full">
-            <div className="bg-gray-50 rounded-sm border border-gray-200 shadow-xl relative overflow-hidden h-[630px] sm:h-[680px] flex flex-col transition-all duration-500 w-full">
+            <div className="bg-gray-50 rounded-sm border border-gray-200 shadow-xl relative overflow-hidden h-auto min-h-fit flex flex-col transition-all duration-500 w-full max-h-[95vh] sm:max-h-[90vh]">
               
-              <div className="px-5 sm:px-8 pt-6 sm:pt-8 pb-1 shrink-0">
-                <div className="flex justify-between mb-3">
+              <div className="px-5 sm:px-8 pt-4 sm:pt-6 pb-1 shrink-0">
+                <div className="flex justify-between mb-2 sm:mb-3">
                   <div className={`flex flex-col transition-all duration-500 ${currentPhase >= 1 ? 'opacity-100' : 'opacity-20'}`}>
                     <span className="mono text-[8px] font-bold tracking-widest mb-1 text-gray-400">01</span>
                     <span className={`text-[9px] sm:text-[10px] font-bold tracking-widest uppercase ${currentPhase === 1 ? 'text-black' : 'text-gray-400'}`}>Selectie</span>
@@ -786,12 +785,12 @@ const OnboardingForm: React.FC = () => {
                 </div>
               </div>
 
-              <div className={`px-5 sm:px-8 md:px-12 py-3 sm:py-4 flex-grow transition-all duration-500 ${isAnimating || isSending ? 'opacity-30 blur-sm' : 'opacity-100 blur-0'} flex flex-col w-full`}>
+              <div className={`px-5 sm:px-8 md:px-12 py-2 sm:py-3 flex-grow transition-all duration-500 ${isAnimating || isSending ? 'opacity-30 blur-sm' : 'opacity-100 blur-0'} flex flex-col w-full overflow-y-auto custom-scrollbar`}>
                 {renderStepContent()}
               </div>
 
               {isNavigationVisible && (
-                <div className="px-5 sm:px-8 py-4 sm:py-6 border-t border-gray-100 bg-gray-50/50 shrink-0 w-full">
+                <div className="px-5 sm:px-8 py-3 sm:py-4 border-t border-gray-100 bg-gray-50/50 shrink-0 w-full mt-auto">
                   <div className="flex gap-3 sm:gap-4 w-full">
                     {stepHistory.length > 1 && (
                       <NavButton variant="secondary" onClick={handleBack} disabled={isSending}>Terug</NavButton>
@@ -822,7 +821,12 @@ const OnboardingForm: React.FC = () => {
           </div>
         </div>
       </div>
-      <style>{`@keyframes gradient-shift { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }`}</style>
+      <style>{`
+        @keyframes gradient-shift { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #eee; border-radius: 10px; }
+      `}</style>
     </section>
   );
 };
