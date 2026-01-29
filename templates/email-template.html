@@ -28,24 +28,19 @@
             background-color: #ffffff !important;
             color: #000000 !important;
         }
-        /* Dark Mode Overrides voor Gmail/Outlook om lichte achtergrond te forceren */
+        /* Dark Mode Overrides voor Gmail/Outlook om lichte achtergrond te forceren in de content */
         @media (prefers-color-scheme: dark) {
             .wrapper { background-color: #ffffff !important; }
             .container { background-color: #ffffff !important; border-color: #eeeeee !important; }
             .content { background-color: #fafafa !important; }
-            .footer { background-color: #ffffff !important; }
             .greeting, .text-black { color: #000000 !important; }
             .text-gray { color: #666666 !important; }
             .message-box { background-color: #ffffff !important; color: #333333 !important; }
             .logo-name { color: #000000 !important; }
             .logo-audio { color: #888888 !important; }
-            td { color: #000000 !important; }
+            td.light-td { color: #000000 !important; }
             .label { color: #888888 !important; }
         }
-        /* Outlook.com specifieke fixes */
-        [data-ogsc] .wrapper { background-color: #ffffff !important; }
-        [data-ogsc] .container { background-color: #ffffff !important; }
-        [data-ogsc] .text-black { color: #000000 !important; }
 
         .wrapper {
             width: 100%;
@@ -53,7 +48,7 @@
             padding: 40px 0;
         }
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
             background-color: #ffffff;
             border: 1px solid #f3f4f6;
@@ -61,71 +56,113 @@
             overflow: hidden;
         }
         .header {
-            padding: 60px 40px 50px;
+            padding: 50px 40px 40px;
             text-align: center;
             background-color: #ffffff;
-        }
-        .logo-graphic-container {
-            text-align: center;
         }
         .content {
             padding: 40px;
             background-color: #fafafa;
         }
         .greeting {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 300;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             line-height: 1.4;
             color: #000000;
         }
         .details-container {
-            margin-top: 30px;
+            margin-top: 20px;
             border-top: 2px solid #000000;
             padding-top: 10px;
         }
         .message-box {
-            margin-top: 40px;
+            margin-top: 35px;
             padding: 24px;
             background-color: #ffffff;
             border-left: 3px solid #87E8A0;
-            font-size: 15px;
+            font-size: 14px;
             line-height: 1.7;
             color: #374151;
         }
-        .footer {
-            padding: 48px 40px;
-            background-color: #ffffff;
-            border-top: 1px solid #f3f4f6;
+        
+        /* Black Footer Section */
+        .black-footer {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 60px 40px;
+            text-align: left;
         }
-        .footer-table {
-            width: 100%;
-            border-collapse: collapse;
+        .footer-heading {
+            font-size: 32px;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 40px;
+            letter-spacing: -0.04em;
+            color: #ffffff;
         }
-        .footer-logo {
+        .footer-heading span {
+            font-style: italic;
+        }
+        .contact-item {
+            margin-bottom: 12px;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        .contact-label {
             font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
             text-transform: uppercase;
-            font-size: 16px;
-            letter-spacing: -0.05em;
-            color: #000000;
-        }
-        .footer-copyright {
             font-size: 10px;
+            letter-spacing: 0.1em;
             color: #9ca3af;
+            display: inline-block;
+            width: 60px;
+        }
+        .contact-text {
+            font-size: 15px;
+            font-weight: 300;
+            color: #ffffff;
+            text-decoration: none !important;
+        }
+        .social-box {
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 2px;
+        }
+        .social-label {
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 0.2em;
+            margin-bottom: 15px;
+            display: block;
+            color: #ffffff;
+        }
+        .instagram-link {
+            display: block;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 300;
+        }
+        .footer-note {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 13px;
+            color: #ffffff;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+        .bottom-credits {
+            margin-top: 40px;
+            font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.3em;
-            font-weight: 500;
-            text-align: center;
+            color: #ffffff;
         }
-        .footer-links {
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            font-weight: 700;
-            color: #6b7280;
-            text-align: right;
-        }
+        
         .label {
             color: #888888;
             font-size: 11px;
@@ -138,22 +175,43 @@
             font-size: 14px;
             font-weight: 500;
         }
-        a { color: inherit; text-decoration: none; }
+        a { text-decoration: none; }
+
+        /* Media Query voor Mobiel Stacking */
+        @media only screen and (max-width: 600px) {
+            .footer-col {
+                display: block !important;
+                width: 100% !important;
+                padding-right: 0 !important;
+                margin-bottom: 30px;
+            }
+            .black-footer {
+                padding: 40px 20px !important;
+            }
+            .footer-heading {
+                font-size: 26px !important;
+            }
+            .contact-item {
+                white-space: normal !important;
+            }
+            .bottom-credits {
+                text-align: left !important;
+                margin-top: 20px !important;
+            }
+        }
     </style>
 </head>
-<body class="dark-mode-bg">
-    <div class="wrapper dark-mode-bg" style="background-color: #ffffff !important;">
-        <div class="container dark-mode-bg" style="background-color: #ffffff !important;">
-            <!-- Header met groter PNG Logo zonder tekst -->
-            <div class="header dark-mode-bg" style="background-color: #ffffff !important;">
-                <div class="logo-graphic-container">
-                    <img src="https://s6.imgcdn.dev/Y07eng.png" width="320" height="auto" alt="Rik de Wit Audio" style="display: block; margin: 0 auto; max-width: 100%; border: 0;">
-                </div>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <!-- Header -->
+            <div class="header">
+                <img src="https://s6.imgcdn.dev/Y07eng.png" width="280" alt="Rik de Wit Audio" style="display: block; margin: 0 auto;">
             </div>
 
             <!-- Content Area -->
-            <div class="content" style="background-color: #fafafa !important;">
-                <div class="greeting dark-mode-text" style="color: #000000 !important;">
+            <div class="content">
+                <div class="greeting">
                     Nieuwe aanvraag voor <span style="font-style: italic;">{{project_type}}</span><br>
                     van <span style="font-weight: 500;">{{customer_name}}</span>
                 </div>
@@ -163,47 +221,71 @@
                     
                     <table width="100%" style="border-collapse: collapse; margin-top: 10px;">
                         <tr>
-                            <td class="label dark-mode-text" style="padding: 12px 0; border-bottom: 1px solid #eeeeee; color: #888888 !important;">ORGANISATIE</td>
-                            <td class="value dark-mode-text" style="padding: 12px 0; border-bottom: 1px solid #eeeeee; color: #000000 !important;">{{customer_org}}</td>
+                            <td class="label light-td" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">ORGANISATIE</td>
+                            <td class="value light-td" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">{{customer_org}}</td>
                         </tr>
                         <tr>
-                            <td class="label dark-mode-text" style="padding: 12px 0; border-bottom: 1px solid #eeeeee; color: #888888 !important;">EMAIL</td>
-                            <td class="value dark-mode-text" style="padding: 12px 0; border-bottom: 1px solid #eeeeee; color: #000000 !important;">{{customer_email}}</td>
+                            <td class="label light-td" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">EMAIL</td>
+                            <td class="value light-td" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">{{customer_email}}</td>
                         </tr>
                         <tr>
-                            <td class="label dark-mode-text" style="padding: 12px 0; border-bottom: 1px solid #eeeeee; color: #888888 !important;">TELEFOON</td>
-                            <td class="value dark-mode-text" style="padding: 12px 0; border-bottom: 1px solid #eeeeee; color: #000000 !important;">{{customer_phone}}</td>
-                        </tr>
-                        <tr>
-                            <td class="label dark-mode-text" style="padding: 12px 0; border-bottom: 1px solid #eeeeee; color: #888888 !important;">LOCATIE</td>
-                            <td class="value dark-mode-text" style="padding: 12px 0; border-bottom: 1px solid #eeeeee; color: #000000 !important;">{{customer_location}}</td>
-                        </tr>
-                        <tr>
-                            <td class="label dark-mode-text" style="padding: 12px 0; border-bottom: 1px solid #eeeeee; color: #888888 !important;">VOORKEUR</td>
-                            <td class="value dark-mode-text" style="padding: 12px 0; border-bottom: 1px solid #eeeeee; color: #000000 !important; text-transform: uppercase;">{{contact_preference}}</td>
+                            <td class="label light-td" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">TELEFOON</td>
+                            <td class="value light-td" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">{{customer_phone}}</td>
                         </tr>
                     </table>
                 </div>
 
-                <div class="message-box dark-mode-bg" style="background-color: #ffffff !important;">
-                    <div style="font-size: 10px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: #9ca3af !important; margin-bottom: 8px; letter-spacing: 0.2em;">Bericht / Toelichting:</div>
-                    <div class="dark-mode-text" style="color: #333333 !important;">{{customer_message}}</div>
+                <div class="message-box">
+                    <div style="font-size: 10px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: #9ca3af; margin-bottom: 8px; letter-spacing: 0.2em;">Bericht / Toelichting:</div>
+                    <div>{{customer_message}}</div>
                 </div>
             </div>
 
-            <!-- Website Footer -->
-            <div class="footer dark-mode-bg" style="background-color: #ffffff !important;">
-                <table class="footer-table">
+            <!-- Black Footer Section -->
+            <div class="black-footer">
+                <div class="footer-heading">
+                    Laten we samenwerken aan een <span>beter geluid</span>.
+                </div>
+
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
                     <tr>
-                        <td class="footer-logo dark-mode-text" style="color: #000000 !important;">
-                            RIK DE WIT <span style="color: #9ca3af; font-weight: 300;">AUDIO</span>
+                        <td width="55%" valign="top" class="footer-col" style="padding-right: 20px;">
+                            <div class="contact-item">
+                                <span class="contact-label">Email:</span>
+                                <a href="mailto:audio@rikdewit.nl" class="contact-text">audio@rikdewit.nl</a>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">Tel:</span>
+                                <a href="tel:+31637231247" class="contact-text">+31 6 372 312 47</a>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">Site:</span>
+                                <a href="https://audio.rikdewit.nl" class="contact-text">audio.rikdewit.nl</a>
+                            </div>
                         </td>
-                        <td class="footer-copyright" style="color: #9ca3af !important;">
+                        <td width="30%" valign="top" class="footer-col">
+                            <div class="social-box">
+                                <span class="social-label">Volg mij</span>
+                                <a href="https://www.instagram.com/rikdewit.audio" target="_blank" class="instagram-link">
+                                    <span style="font-weight: 600; font-size: 11px; opacity: 0.7; display: block; margin-bottom: 5px; color: #ffffff; letter-spacing: 0.1em;">INSTAGRAM</span>
+                                    <span style="color: #ffffff;">@rikdewit.audio</span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="footer-note">
+                    Beschikbaar voor freelance projecten, tournee-ondersteuning en audio consultancy door heel Nederland en daarbuiten.
+                </div>
+
+                <table width="100%" style="margin-top: 40px;">
+                    <tr>
+                        <td class="footer-col" style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; color: #ffffff;">
+                            RIK DE WIT <span style="font-weight: 300; color: #ffffff; opacity: 0.6;">AUDIO</span>
+                        </td>
+                        <td align="right" class="footer-col bottom-credits">
                             &copy; {{current_year}} RIK DE WIT AUDIO
-                        </td>
-                        <td class="footer-links" style="color: #6b7280 !important;">
-                            <a href="https://rikdewit.nl" style="color: #6b7280 !important;">PRIVACY</a> &nbsp;&nbsp; 
-                            <a href="https://rikdewit.nl" style="color: #6b7280 !important;">VOORWAARDEN</a>
                         </td>
                     </tr>
                 </table>
