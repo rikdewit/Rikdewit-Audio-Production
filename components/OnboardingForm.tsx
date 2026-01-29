@@ -105,8 +105,7 @@ const OnboardingForm: React.FC = () => {
     const studioType = formData['studio-type'];
 
     if (service === 'live') {
-      if (performers?.includes('Band') || formData['has-live-music'] === 'ja') return "Band / Act Naam";
-      return "Bedrijf / Eventnaam";
+      return "Naam Evenement / Act";
     }
     if (service === 'studio') {
       if (studioType === 'Podcast opname' || studioType === 'Voice-over') return "Projectnaam";
@@ -127,8 +126,7 @@ const OnboardingForm: React.FC = () => {
     const studioType = formData['studio-type'];
 
     if (service === 'live') {
-      if (performers?.includes('Band') || formData['has-live-music'] === 'ja') return "Naam van de band of act";
-      return "Bijv. Agency naam of naam van het evenement";
+      return "Bijv. Festivalnaam of Bandnaam";
     }
     if (service === 'studio') {
       if (studioType === 'Podcast opname' || studioType === 'Voice-over') return "Naam van het project";
@@ -140,7 +138,7 @@ const OnboardingForm: React.FC = () => {
       if (who === 'Muzikant / Band') return "Naam van de band of act";
       if (who === 'Particulier') return "Naam van het project";
     }
-    return "Naam van je bedrijf or organisatie";
+    return "Naam van je bedrijf of organisatie";
   }, [formData]);
 
   const formatProjectSummary = (data: FormData): string => {
