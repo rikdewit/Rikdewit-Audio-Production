@@ -11,8 +11,8 @@ type StepId =
   | 'performers' | 'instruments' | 'location-equipment' | 'location-name' | 'live-practical'
   | 'studio-type' | 'studio-recording-method' | 'studio-locatie-keuze' | 'studio-details'
   | 'nabewerking-type' | 'nabewerking-details'
-  | 'advies-who' | 'advies-goal' | 'advies-muzikant-details' | 'advies-ruimte' | 'advies-doel' | 'advies-methode'
-  | 'advies-gebruik' | 'advies-kopen-details' | 'advies-kopen-type'
+  | 'advies-who' | 'advies-goal' | 'advies-ruimte' | 'advies-doel' | 'advies-methode'
+  | 'advies-gebruik' | 'advies-kopen-details' | 'advies-kopen-type' | 'advies-muzikant-details'
   | 'anders-beschrijving'
   | 'contact' | 'success' | 'error';
 
@@ -143,40 +143,39 @@ const OnboardingForm: React.FC = () => {
     return "Naam van je bedrijf of organisatie";
   }, [formData]);
 
-  const formatProjectDetails = (data: FormData): string => {
-    const rows: string[] = [];
-    const addRow = (label: string, value: any) => {
-      if (value) rows.push(`<tr><td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; color: #888888; font-size: 11px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; width: 40%;">${label}</td><td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; color: #000000; font-size: 14px; font-weight: 500;">${value}</td></tr>`);
-    };
-    const serviceMap: any = { 'live': 'Live Geluid', 'studio': 'Studio Opname', 'nabewerking': 'Nabewerking', 'advies': 'Advies', 'anders': 'Overig' };
-    addRow('Dienst', serviceMap[data['main-service']] || data['main-service']);
+  // Updated to return PLAIN TEXT instead of HTML string
+  const formatProjectSummary = (data: FormData): string => {
+    const items: string[] = [];
     
-    if (data['contact-org']) {
-      addRow('Namens / Organisatie', data['contact-org']);
-    }
-
-    if (data['contact-location']) {
-      addRow('Locatie', data['contact-location']);
-    }
-
     Object.keys(data).forEach(key => {
-      if (!key.startsWith('contact-') && key !== 'main-service') {
+      // Skip contact fields and internal main service as they are handled elsewhere in the template
+      const skipKeys = [
+        'contact-name', 'contact-org', 'contact-email', 
+        'contact-phone', 'contact-location', 'contact-pref', 
+        'main-service', 'hire-details', 'event-details', 
+        'studio-details', 'nabewerking-details', 
+        'advies-muzikant-details', 'anders-details'
+      ];
+
+      if (!skipKeys.includes(key)) {
         const value = data[key];
+        const label = key.replace(/-/g, ' ').replace('equip ', 'APP: ').replace('instrument ', 'INSTR: ').toUpperCase();
+        
         if (typeof value === 'boolean') {
-           if (value) addRow(key.replace(/-/g, ' ').toUpperCase(), 'JA');
-        } else {
-           addRow(key.replace(/-/g, ' ').toUpperCase(), value);
+           if (value) items.push(`${label}: JA`);
+        } else if (value && value !== '') {
+           items.push(`${label}: ${value}`);
         }
       }
     });
-    return `<table width="100%" style="border-collapse: collapse;">${rows.join('')}</table>`;
+    return items.join('\n');
   };
 
   const handleFinalSubmit = async () => {
     setIsSending(true);
     try {
       const serviceMap: any = { 'live': 'Live Geluid', 'studio': 'Studio Opname', 'nabewerking': 'Nabewerking', 'advies': 'Advies', 'anders': 'Overig' };
-      const projectDetailsHtml = formatProjectDetails(formData);
+      const projectSummary = formatProjectSummary(formData);
       const customerEmail = formData['contact-email'];
       const customerName = formData['contact-name'];
       const projectType = serviceMap[formData['main-service']] || formData['main-service'];
@@ -189,7 +188,7 @@ const OnboardingForm: React.FC = () => {
         customer_org: formData['contact-org'] || 'Niet opgegeven',
         contact_preference: formData['contact-pref'],
         project_type: projectType,
-        project_details_html: projectDetailsHtml,
+        project_summary: projectSummary, // Send as plain text
         customer_message: formData['hire-details'] || formData['event-details'] || formData['studio-details'] || formData['nabewerking-details'] || formData['advies-muzikant-details'] || formData['anders-details'] || 'Geen extra toelichting.',
         current_year: new Date().getFullYear()
       };
