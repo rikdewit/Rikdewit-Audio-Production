@@ -161,7 +161,12 @@ const OnboardingForm: React.FC = () => {
 
     Object.keys(data).forEach(key => {
       if (!key.startsWith('contact-') && key !== 'main-service') {
-        addRow(key.replace(/-/g, ' ').toUpperCase(), data[key]);
+        const value = data[key];
+        if (typeof value === 'boolean') {
+           if (value) addRow(key.replace(/-/g, ' ').toUpperCase(), 'JA');
+        } else {
+           addRow(key.replace(/-/g, ' ').toUpperCase(), value);
+        }
       }
     });
     return `<table width="100%" style="border-collapse: collapse;">${rows.join('')}</table>`;
@@ -175,16 +180,20 @@ const OnboardingForm: React.FC = () => {
       const customerEmail = formData['contact-email'];
       const customerName = formData['contact-name'];
       const projectType = serviceMap[formData['main-service']] || formData['main-service'];
+      
       const baseParams = {
         customer_name: customerName,
         customer_email: customerEmail,
         customer_phone: formData['contact-phone'],
         customer_location: formData['contact-location'] || 'Niet opgegeven',
+        customer_org: formData['contact-org'] || 'Niet opgegeven',
         contact_preference: formData['contact-pref'],
         project_type: projectType,
         project_details_html: projectDetailsHtml,
-        customer_message: formData['hire-details'] || formData['event-details'] || formData['studio-details'] || formData['nabewerking-details'] || formData['advies-muzikant-details'] || formData['anders-details'] || 'Geen extra toelichting.'
+        customer_message: formData['hire-details'] || formData['event-details'] || formData['studio-details'] || formData['nabewerking-details'] || formData['advies-muzikant-details'] || formData['anders-details'] || 'Geen extra toelichting.',
+        current_year: new Date().getFullYear()
       };
+
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { ...baseParams, recipient_email: MIJN_EMAIL, email_subject: `Nieuwe aanvraag: ${projectType} - ${customerName}`, reply_to: customerEmail }, EMAILJS_PUBLIC_KEY);
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { ...baseParams, recipient_email: customerEmail, email_subject: `Bevestiging van je aanvraag: ${projectType}`, reply_to: MIJN_EMAIL }, EMAILJS_PUBLIC_KEY);
       setIsSending(false);
