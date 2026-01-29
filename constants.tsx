@@ -76,7 +76,7 @@ export const Logo: React.FC<{ className?: string; hideText?: boolean; isNavbar?:
 );
 
 export const SERVICES: Service[] = [
-  { id: 'live-mixing', title: 'Live Mixing', description: 'Het mengen van audio bij live evenementen en optredens voor een kristalhelder geluid.', icon: 'Mic2' },
+  { id: 'live-mixing', title: 'Live Mixing', description: 'Het mixen van audio bij live evenementen en optredens voor een kristalhelder geluid.', icon: 'Mic2' },
   { id: 'evenementen', title: 'Evenementen', description: 'Complete audio-oplossingen voor elk type evenement, van klein tot groot.', icon: 'Speaker' },
   { id: 'technische-ondersteuning', title: 'Technische Ondersteuning', description: 'Professionele ondersteuning en technisch advies voor al uw audio-vraagstukken.', icon: 'Settings' }
 ];
