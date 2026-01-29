@@ -614,7 +614,7 @@ const OnboardingForm: React.FC = () => {
       case 'live-practical':
         return (
           <div className="space-y-3 sm:space-y-4">
-            <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Praktische info</h2>
+            <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Info over je event</h2>
             <div className="grid gap-3 sm:gap-4">
                <div className="flex flex-col gap-0.5">
                  <label className="mono text-[10px] uppercase text-gray-400 font-bold tracking-widest">Datum</label>
