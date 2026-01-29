@@ -55,7 +55,7 @@ const Contact: React.FC = () => {
               </a>
             </div>
             <div className="mt-20 pt-10 border-t border-white/10 text-gray-500 text-lg font-light leading-relaxed">
-              Beschikbaar voor freelance projecten, tournee-ondersteuning en audio consultancy door heel Nederland en daarbuiten.
+              Actief als freelance audio technicus met een sterke focus op live sound en muziekproducties, in heel Nederland en daarbuiten.
             </div>
           </div>
         </div>
