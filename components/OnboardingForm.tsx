@@ -636,7 +636,7 @@ const OnboardingForm: React.FC = () => {
               <div className="grid grid-cols-2 gap-3 sm:gap-5">
                 <div className="flex flex-col gap-1">
                   <label className="mono text-[10px] uppercase text-gray-500 font-bold tracking-widest">Naam *</label>
-                  <input type="text" className="border-b border-gray-300 py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="Je naam" value={formData['contact-name'] || ''} onChange={e => updateFormData('contact-name', e.target.value)} />
+                  <input type="text" className="border-b border-gray-300 py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="" value={formData['contact-name'] || ''} onChange={e => updateFormData('contact-name', e.target.value)} />
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="mono text-[10px] uppercase text-gray-500 font-bold tracking-widest">{dynamicOrgLabel}</label>
@@ -646,11 +646,11 @@ const OnboardingForm: React.FC = () => {
               <div className="grid grid-cols-2 gap-3 sm:gap-5">
                 <div className="flex flex-col gap-1">
                   <label className="mono text-[10px] uppercase text-gray-500 font-bold tracking-widest">E-mail *</label>
-                  <input type="email" className="border-b border-gray-300 py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="Mail" value={formData['contact-email'] || ''} onChange={e => updateFormData('contact-email', e.target.value)} />
+                  <input type="email" className="border-b border-gray-300 py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="" value={formData['contact-email'] || ''} onChange={e => updateFormData('contact-email', e.target.value)} />
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="mono text-[10px] uppercase text-gray-500 font-bold tracking-widest">Telefoon *</label>
-                  <input type="tel" className="border-b border-gray-300 py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="06..." value={formData['contact-phone'] || ''} onChange={e => updateFormData('contact-phone', e.target.value)} />
+                  <input type="tel" className="border-b border-gray-300 py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="" value={formData['contact-phone'] || ''} onChange={e => updateFormData('contact-phone', e.target.value)} />
                 </div>
               </div>
               <div className="flex flex-col gap-1">
