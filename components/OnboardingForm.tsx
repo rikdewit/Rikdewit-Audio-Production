@@ -625,6 +625,10 @@ const OnboardingForm: React.FC = () => {
                  <input type="text" className="border-b border-gray-300 py-1.5 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="Stad of specifieke plek" value={formData['event-location'] || ''} onChange={e => updateFormData('event-location', e.target.value)} />
                </div>
                <div className="flex flex-col gap-0.5">
+                 <label className="mono text-[10px] uppercase text-gray-400 font-bold tracking-widest">Verwacht aantal bezoekers</label>
+                 <input type="number" className="border-b border-gray-300 py-1.5 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="Bijv. 150" value={formData['event-visitors'] || ''} onChange={e => updateFormData('event-visitors', e.target.value)} />
+               </div>
+               <div className="flex flex-col gap-0.5">
                  <label className="mono text-[10px] uppercase text-gray-400 font-bold tracking-widest">Toelichting</label>
                  <textarea className="border-b border-gray-300 py-1.5 text-base sm:text-lg focus:border-black outline-none font-light min-h-[80px] resize-none bg-transparent text-black" placeholder="Aanvullende wensen of bijzonderheden?" value={formData['event-details'] || ''} onChange={e => updateFormData('event-details', e.target.value)} />
                </div>
