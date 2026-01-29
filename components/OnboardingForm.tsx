@@ -140,15 +140,13 @@ const OnboardingForm: React.FC = () => {
       if (who === 'Muzikant / Band') return "Naam van de band of act";
       if (who === 'Particulier') return "Naam van het project";
     }
-    return "Naam van je bedrijf of organisatie";
+    return "Naam van je bedrijf or organisatie";
   }, [formData]);
 
-  // Updated to return PLAIN TEXT instead of HTML string
   const formatProjectSummary = (data: FormData): string => {
     const items: string[] = [];
     
     Object.keys(data).forEach(key => {
-      // Skip contact fields and internal main service as they are handled elsewhere in the template
       const skipKeys = [
         'contact-name', 'contact-org', 'contact-email', 
         'contact-phone', 'contact-location', 'contact-pref', 
@@ -188,7 +186,7 @@ const OnboardingForm: React.FC = () => {
         customer_org: formData['contact-org'] || 'Niet opgegeven',
         contact_preference: formData['contact-pref'],
         project_type: projectType,
-        project_summary: projectSummary, // Send as plain text
+        project_summary: projectSummary,
         customer_message: formData['hire-details'] || formData['event-details'] || formData['studio-details'] || formData['nabewerking-details'] || formData['advies-muzikant-details'] || formData['anders-details'] || 'Geen extra toelichting.',
         current_year: new Date().getFullYear()
       };
@@ -243,10 +241,9 @@ const OnboardingForm: React.FC = () => {
       const who = formData['advies-who'];
       if (who === 'Muzikant / Band') return 'advies-muzikant-details';
       if (who === 'Evenementen organisator' || who === 'Particulier' || who === 'Anders') return 'anders-beschrijving';
-      return 'advies-goal'; // Horeca / Retail goes here
+      return 'advies-goal';
     }
     if (step === 'advies-goal') {
-      // Horeca goes straight to details text area
       if (formData['advies-who'] === 'Horeca / Retail') return 'anders-beschrijving';
       
       const g = formData['advies-goal'];
@@ -565,7 +562,6 @@ const OnboardingForm: React.FC = () => {
           </div>
         );
       case 'location-equipment':
-        // Filter out 'Backline' if there's no live music selected
         const baseEquipOptions = ['Speakers (PA)', 'Mixer', 'Microfoons', 'Monitoren', 'Backline', 'Bekabeling', 'Stroomtoevoer', 'Weet ik (nog) niet'];
         const equipOptions = formData['has-live-music'] === 'nee' 
           ? baseEquipOptions.filter(opt => opt !== 'Backline')
@@ -592,7 +588,6 @@ const OnboardingForm: React.FC = () => {
                       const newValue = !formData[`equip-${e}`];
                       
                       if (isBlockingOption && newValue) {
-                        // If selecting a blocking option, clear all others
                         const nextData = { ...formData };
                         equipOptions.forEach(opt => {
                           if (opt !== e) delete nextData[`equip-${opt}`];
@@ -662,8 +657,8 @@ const OnboardingForm: React.FC = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-1">
-                <label className="mono text-[10px] uppercase text-gray-500 font-bold tracking-widest">Locatie</label>
-                <input type="text" className="border-b border-gray-300 py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="Stad/Plaats" value={formData['contact-location'] || ''} onChange={e => updateFormData('contact-location', e.target.value)} />
+                <label className="mono text-[10px] uppercase text-gray-500 font-bold tracking-widest">Waar ben je gevestigd?</label>
+                <input type="text" className="border-b border-gray-300 py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="Stad of regio" value={formData['contact-location'] || ''} onChange={e => updateFormData('contact-location', e.target.value)} />
               </div>
               <div className="flex flex-col gap-2 sm:gap-3 mt-1 sm:mt-2"><label className="mono text-[10px] uppercase text-gray-400 font-bold tracking-widest">Voorkeur</label>
                 <div className="grid grid-cols-3 gap-2 sm:gap-3">{[{ id: 'email', label: 'Mail', icon: Mail }, { id: 'telefoon', label: 'Bel', icon: Phone }, { id: 'whatsapp', label: 'App', icon: MessageSquare }].map(opt => (
@@ -717,7 +712,6 @@ const OnboardingForm: React.FC = () => {
           <div className="lg:col-span-3 w-full max-w-full">
             <div className="bg-gray-50 rounded-sm border border-gray-200 shadow-xl relative overflow-hidden h-[630px] sm:h-[680px] flex flex-col transition-all duration-500 w-full">
               
-              {/* Progress Header */}
               <div className="px-5 sm:px-8 pt-6 sm:pt-8 pb-1 shrink-0">
                 <div className="flex justify-between mb-3">
                   <div className={`flex flex-col transition-all duration-500 ${currentPhase >= 1 ? 'opacity-100' : 'opacity-20'}`}>
@@ -741,12 +735,10 @@ const OnboardingForm: React.FC = () => {
                 </div>
               </div>
 
-              {/* Content Area - Minimal padding for vertical space */}
               <div className={`px-5 sm:px-8 md:px-12 py-3 sm:py-4 flex-grow transition-all duration-500 ${isAnimating || isSending ? 'opacity-30 blur-sm' : 'opacity-100 blur-0'} flex flex-col w-full`}>
                 {renderStepContent()}
               </div>
 
-              {/* Fixed Navigation Footer - Compacted */}
               {isNavigationVisible && (
                 <div className="px-5 sm:px-8 py-4 sm:py-6 border-t border-gray-100 bg-gray-50/50 shrink-0 w-full">
                   <div className="flex gap-3 sm:gap-4 w-full">
