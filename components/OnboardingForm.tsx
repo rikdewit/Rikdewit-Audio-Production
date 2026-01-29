@@ -29,6 +29,7 @@ const OnboardingForm: React.FC = () => {
   const [stepHistory, setStepHistory] = useState<StepId[]>(['main']);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  const [showValidationErrors, setShowValidationErrors] = useState(false);
 
   // --- EMAILJS CONFIGURATIE ---
   const EMAILJS_SERVICE_ID = 'service_k3tk1lw'; 
@@ -57,12 +58,21 @@ const OnboardingForm: React.FC = () => {
   const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validatePhone = (phone: string) => /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]{7,15}$/.test(phone);
 
+  // Validatie helpers voor UI
+  const emailValue = formData['contact-email'] || '';
+  const phoneValue = formData['contact-phone'] || '';
+  const nameValue = formData['contact-name'] || '';
+
+  const isEmailInvalid = useMemo(() => showValidationErrors && !validateEmail(emailValue), [showValidationErrors, emailValue]);
+  const isPhoneInvalid = useMemo(() => showValidationErrors && !validatePhone(phoneValue), [showValidationErrors, phoneValue]);
+
   const isContactStepValid = useMemo(() => {
-    const name = formData['contact-name'] || '';
-    const email = formData['contact-email'] || '';
-    const phone = formData['contact-phone'] || '';
-    return name.trim().length > 1 && validateEmail(email) && validatePhone(phone);
-  }, [formData]);
+    return nameValue.trim().length > 1 && validateEmail(emailValue) && validatePhone(phoneValue);
+  }, [nameValue, emailValue, phoneValue]);
+
+  const isContactStepFilled = useMemo(() => {
+    return nameValue.trim().length > 1 && emailValue.trim().length > 0 && phoneValue.trim().length > 0;
+  }, [nameValue, emailValue, phoneValue]);
 
   const canGoNext = useMemo(() => {
     switch (currentStep) {
@@ -96,10 +106,10 @@ const OnboardingForm: React.FC = () => {
         return Object.keys(formData).some(k => k.startsWith('equip-') && formData[k]);
       case 'location-name': return !!formData['loc-name'];
       case 'live-practical': return !!formData['event-date'] && !!formData['event-location'];
-      case 'contact': return isContactStepValid;
+      case 'contact': return isContactStepFilled;
       default: return true;
     }
-  }, [currentStep, formData, isContactStepValid]);
+  }, [currentStep, formData, isContactStepFilled]);
 
   const dynamicOrgLabel = useMemo(() => {
     const service = formData['main-service'];
@@ -141,7 +151,7 @@ const OnboardingForm: React.FC = () => {
       if (who === 'Muzikant / Band') return "Naam van de band of act";
       if (who === 'Particulier') return "Naam van het project";
     }
-    return "Naam van je bedrijf or organisatie";
+    return "Naam van je bedrijf of organisatie";
   }, [formData]);
 
   const formatProjectSummary = (data: FormData): string => {
@@ -273,7 +283,14 @@ const OnboardingForm: React.FC = () => {
   }, [formData]);
 
   const handleNext = () => {
-    if (currentStep === 'contact') { handleFinalSubmit(); return; }
+    if (currentStep === 'contact') { 
+      if (!isContactStepValid) {
+        setShowValidationErrors(true);
+        return;
+      }
+      handleFinalSubmit(); 
+      return; 
+    }
     const next = determineNextStep(currentStep);
     if (next) {
       setIsAnimating(true);
@@ -292,6 +309,8 @@ const OnboardingForm: React.FC = () => {
         const h = [...stepHistory]; h.pop();
         setStepHistory(h); setCurrentStep(h[h.length - 1]);
         setIsAnimating(false);
+        // Reset validatie view bij teruggaan van contact naar een eerdere stap
+        if (currentStep === 'contact') setShowValidationErrors(false);
       }, 300);
     }
   };
@@ -699,11 +718,25 @@ const OnboardingForm: React.FC = () => {
               <div className="grid grid-cols-2 gap-3 sm:gap-5">
                 <div className="flex flex-col gap-1">
                   <label className="mono text-[10px] uppercase text-gray-500 font-bold tracking-widest">E-mail *</label>
-                  <input type="email" className="border-b border-gray-300 py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="" value={formData['contact-email'] || ''} onChange={e => updateFormData('contact-email', e.target.value)} />
+                  <input 
+                    type="email" 
+                    className={`border-b py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full transition-colors ${isEmailInvalid ? 'border-red-500' : 'border-gray-300'}`} 
+                    placeholder="" 
+                    value={emailValue} 
+                    onChange={e => updateFormData('contact-email', e.target.value)} 
+                  />
+                  {isEmailInvalid && <span className="text-[9px] text-red-500 mono font-bold uppercase tracking-widest mt-1">Ongeldig e-mailadres</span>}
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="mono text-[10px] uppercase text-gray-500 font-bold tracking-widest">Telefoon *</label>
-                  <input type="tel" className="border-b border-gray-300 py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="" value={formData['contact-phone'] || ''} onChange={e => updateFormData('contact-phone', e.target.value)} />
+                  <input 
+                    type="tel" 
+                    className={`border-b py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full transition-colors ${isPhoneInvalid ? 'border-red-500' : 'border-gray-300'}`} 
+                    placeholder="" 
+                    value={phoneValue} 
+                    onChange={e => updateFormData('contact-phone', e.target.value)} 
+                  />
+                  {isPhoneInvalid && <span className="text-[9px] text-red-500 mono font-bold uppercase tracking-widest mt-1">Ongeldig nummer</span>}
                 </div>
               </div>
               <div className="flex flex-col gap-1">
@@ -741,7 +774,7 @@ const OnboardingForm: React.FC = () => {
             </div>
             <h2 className="text-3xl sm:text-4xl font-light tracking-tight text-black">Ontvangen!</h2>
             <p className="text-gray-500 text-base sm:text-lg font-light max-w-sm mx-auto leading-relaxed">Bedankt voor de details. Ik kom zo snel mogelijk bij je terug.</p>
-            <div className="pt-4 sm:pt-6"><button onClick={() => { setFormData({'contact-pref': 'email'}); setCurrentStep('main'); setStepHistory(['main']); }} className="text-[10px] font-bold tracking-[0.4em] uppercase underline underline-offset-[8px] text-black hover:text-gray-400 transition-colors">Nieuwe aanvraag</button></div>
+            <div className="pt-4 sm:pt-6"><button onClick={() => { setFormData({'contact-pref': 'email'}); setCurrentStep('main'); setStepHistory(['main']); setShowValidationErrors(false); }} className="text-[10px] font-bold tracking-[0.4em] uppercase underline underline-offset-[8px] text-black hover:text-gray-400 transition-colors">Nieuwe aanvraag</button></div>
           </div>
         );
       default: return null;
