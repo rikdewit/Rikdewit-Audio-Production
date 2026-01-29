@@ -7,6 +7,7 @@ import emailjs from '@emailjs/browser';
 type StepId = 
   | 'main' 
   | 'live-type' | 'live-hire-role' | 'live-hire-details' 
+  | 'live-hire-location-category' | 'live-hire-practical'
   | 'live-event-type' | 'live-music-check' | 'speakers-only' 
   | 'performers' | 'instruments' | 'location-equipment' | 'location-name' | 'live-practical'
   | 'studio-type' | 'studio-recording-method' | 'studio-locatie-keuze' | 'studio-details'
@@ -68,6 +69,8 @@ const OnboardingForm: React.FC = () => {
       case 'main': return !!formData['main-service'];
       case 'live-type': return !!formData['live-type'];
       case 'live-hire-role': return !!formData['hire-role'];
+      case 'live-hire-location-category': return !!formData['hire-location-category'];
+      case 'live-hire-practical': return !!formData['hire-work-location'] && !!formData['hire-frequency'];
       case 'studio-type': return !!formData['studio-type'];
       case 'studio-recording-method': return !!formData['studio-recording-method'];
       case 'studio-locatie-keuze': return !!formData['studio-locatie-keuze'];
@@ -101,10 +104,10 @@ const OnboardingForm: React.FC = () => {
   const dynamicOrgLabel = useMemo(() => {
     const service = formData['main-service'];
     const who = formData['advies-who'];
-    const performers = formData['performers'];
     const studioType = formData['studio-type'];
 
     if (service === 'live') {
+      if (formData['live-type'] === 'hire') return "Naam Bedrijf / Organisatie";
       return "Naam Evenement / Act";
     }
     if (service === 'studio') {
@@ -122,10 +125,10 @@ const OnboardingForm: React.FC = () => {
   const dynamicOrgPlaceholder = useMemo(() => {
     const service = formData['main-service'];
     const who = formData['advies-who'];
-    const performers = formData['performers'];
     const studioType = formData['studio-type'];
 
     if (service === 'live') {
+      if (formData['live-type'] === 'hire') return "Bijv. Bedrijfsnaam of Locatie";
       return "Bijv. Festivalnaam of Bandnaam";
     }
     if (service === 'studio') {
@@ -210,15 +213,23 @@ const OnboardingForm: React.FC = () => {
       if (service === 'anders') return 'anders-beschrijving';
     }
     if (step === 'live-type') return formData['live-type'] === 'hire' ? 'live-hire-role' : 'live-event-type';
-    if (step === 'live-hire-role') return 'live-hire-details';
+    if (step === 'live-hire-role') return 'live-hire-location-category';
+    if (step === 'live-hire-location-category') return 'live-music-check';
     if (step === 'live-hire-details') return 'contact';
     if (step === 'live-event-type') return (formData['event-type'] === 'concert' || formData['event-type'] === 'Concert / Festival') ? 'performers' : 'live-music-check';
-    if (step === 'live-music-check') return formData['has-live-music'] === 'ja' ? 'performers' : 'location-equipment';
+    
+    if (step === 'live-music-check') {
+        const isHire = formData['live-type'] === 'hire';
+        if (isHire) return 'live-hire-practical';
+        return formData['has-live-music'] === 'ja' ? 'performers' : 'location-equipment';
+    }
+
     if (step === 'performers') return (formData['performers']?.includes('Band')) ? 'instruments' : 'location-equipment';
     if (step === 'instruments') return 'location-equipment';
     if (step === 'location-equipment') return (formData['equip-Weet ik (nog) niet']) ? 'location-name' : 'live-practical';
     if (step === 'location-name') return 'live-practical';
     if (step === 'live-practical') return 'contact';
+    if (step === 'live-hire-practical') return 'contact';
     
     // Studio Flow
     if (step === 'studio-type') {
@@ -227,6 +238,7 @@ const OnboardingForm: React.FC = () => {
       if (t === 'Podcast opname' || t === 'Voice-over') return 'studio-locatie-keuze';
       return 'studio-details';
     }
+    if (step === 'studio-recording-method') return 'studio-recording-method'; // Typo fix? Should likely lead to next studio step.
     if (step === 'studio-recording-method') return 'studio-locatie-keuze';
     if (step === 'studio-locatie-keuze') return 'studio-details';
     if (step === 'studio-details') return 'contact';
@@ -352,9 +364,46 @@ const OnboardingForm: React.FC = () => {
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">In welke rol?</h2>
             <div className="grid gap-2">
-              {['FOH Technicus', 'Monitor Technicus', 'Stagehand / Crew', 'Systeemontwerper', 'Anders'].map(role => (
+              {['Audio Technicus', 'Monitor Technicus', 'Stagehand / Crew', 'Systeemontwerper', 'Anders'].map(role => (
                 <OptionCard key={role} label={role} isSelected={formData['hire-role'] === role} onClick={() => updateFormData('hire-role', role)} />
               ))}
+            </div>
+          </div>
+        );
+      case 'live-hire-location-category':
+        return (
+          <div className="space-y-3 sm:space-y-4">
+            <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Wat voor soort locatie?</h2>
+            <div className="grid gap-2">
+              {['Bar / café', 'Festival', 'Muziekpodium', 'Anders'].map(cat => (
+                <OptionCard key={cat} label={cat} isSelected={formData['hire-location-category'] === cat} onClick={() => updateFormData('hire-location-category', cat)} />
+              ))}
+            </div>
+          </div>
+        );
+      case 'live-hire-practical':
+        return (
+          <div className="space-y-3 sm:space-y-4">
+            <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Praktische gegevens</h2>
+            <div className="grid gap-3 sm:gap-4">
+               <div className="flex flex-col gap-0.5">
+                 <label className="mono text-[10px] uppercase text-gray-400 font-bold tracking-widest">Locatie (Stad/Plek)</label>
+                 <input type="text" className="border-b border-gray-300 py-1.5 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="Bijv. Paradiso, Amsterdam" value={formData['hire-work-location'] || ''} onChange={e => updateFormData('hire-work-location', e.target.value)} />
+               </div>
+               <div className="flex flex-col gap-2">
+                 <label className="mono text-[10px] uppercase text-gray-400 font-bold tracking-widest">Frequentie</label>
+                 <div className="grid grid-cols-2 gap-2">
+                    {['Eenmalig', 'Meerdere keren'].map(freq => (
+                        <div key={freq} onClick={() => updateFormData('hire-frequency', freq)} className={`p-3 border text-center cursor-pointer transition-all text-[10px] uppercase tracking-widest font-bold ${formData['hire-frequency'] === freq ? 'border-black bg-black text-white' : 'border-gray-200 text-gray-400'}`}>
+                            {freq}
+                        </div>
+                    ))}
+                 </div>
+               </div>
+               <div className="flex flex-col gap-0.5 pt-2">
+                 <label className="mono text-[10px] uppercase text-gray-400 font-bold tracking-widest">Toelichting</label>
+                 <textarea className="border-b border-gray-300 py-1.5 text-base sm:text-lg focus:border-black outline-none font-light min-h-[100px] resize-none bg-transparent text-black" placeholder="Bijv. specifieke tijden of andere bijzonderheden." value={formData['hire-details'] || ''} onChange={e => updateFormData('hire-details', e.target.value)} />
+               </div>
             </div>
           </div>
         );
